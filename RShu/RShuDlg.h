@@ -3,6 +3,8 @@
 //
 
 #pragma once
+#include "afxcmn.h"
+#include "Tab1.h"
 
 
 // CRShuDlg ¶Ô»°¿ò
@@ -31,4 +33,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	CTabCtrl m_tab;
+	CTab1 m_tab1;
 };
