@@ -100,24 +100,30 @@ BOOL CRShuDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	srand((unsigned)time(NULL));
+
 	m_tab.InsertItem(0, _T("实验1"));
 	m_tab.InsertItem(1, _T("实验2"));
 	m_tab.InsertItem(2, _T("实验3"));
 	m_tab.InsertItem(3, _T("实验4"));
 	m_tab.InsertItem(4, _T("小例子"));
 
-	//////////////////////     tab1     //////////////////////
-	m_tab1.Create(IDD_DIALOG1, GetDlgItem(IDC_TAB));
 	CRect rs;
 	m_tab.GetClientRect(&rs);
 	rs.top += 31;
 	rs.bottom -= 11;
 	rs.left += 10;
 	rs.right -= 12;
-	m_tab1.MoveWindow(&rs);
-	m_tab1.ShowWindow(1);
 
-	//////////////////////          //////////////////////
+	//////////////////////     tab1 小例子    //////////////////////
+	m_tab1.Create(IDD_DIALOG1, GetDlgItem(IDC_TAB));
+	m_tab1.MoveWindow(&rs);
+	m_tab1.ShowWindow(0);
+
+	//////////////////////     tab2  实验1   //////////////////////
+	m_tab2.Create(IDD_DIALOG2, GetDlgItem(IDC_TAB));
+	m_tab2.MoveWindow(&rs);
+	m_tab2.ShowWindow(1);
 	//////////////////////          //////////////////////
 	//////////////////////          //////////////////////
 	//////////////////////          //////////////////////
@@ -178,4 +184,5 @@ HCURSOR CRShuDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
+
 

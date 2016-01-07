@@ -14,7 +14,6 @@ IMPLEMENT_DYNAMIC(CTab1, CDialogEx)
 CTab1::CTab1(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_DIALOG1, pParent)
 {
-
 }
 
 CTab1::~CTab1()

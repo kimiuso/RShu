@@ -1,5 +1,5 @@
 #pragma once
-
+#include "RTree.h"
 
 // CTab1 ¶Ô»°¿ò
 
@@ -31,4 +31,5 @@ public:
 	CPoint m_ptOrigin;
 	CRect m_rect;
 	long m_dif;
+	RTree m_rtree;
 };

@@ -5,6 +5,7 @@
 #pragma once
 #include "afxcmn.h"
 #include "Tab1.h"
+#include "Tab2.h"
 
 
 // CRShuDlg ¶Ô»°¿ò
@@ -36,4 +37,5 @@ protected:
 public:
 	CTabCtrl m_tab;
 	CTab1 m_tab1;
+	CTab2 m_tab2;
 };
