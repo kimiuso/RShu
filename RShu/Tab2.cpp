@@ -25,6 +25,7 @@ void CTab2::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT1, m_edit);
+	DDX_Control(pDX, IDC_TITLE1, m_title);
 }
 
 
@@ -89,7 +90,8 @@ void CTab2::OnPaint()
 	CFont  font;
 	font.CreatePointFont(100,_T( "微软雅黑"));     //选择字体
 	m_edit.SetFont(&font);
-
+	font.CreatePointFont(150, _T("微软雅黑"));
+	m_title.SetFont(&font);
 
 	pPic = (CStatic*)GetDlgItem(IDC_STATIC);//获取控件
 	pDC = pPic->GetWindowDC();//获取设备环境
@@ -166,25 +168,25 @@ void CTab2::InitTable()
 
 	pDC->TextOutW(r.left - 55, r.top - 50, _T("耗时/ms"));
 
-	pDC->TextOutW(r.left - 55, r.top - 10, _T("5000"));
+	pDC->TextOutW(r.left - 45, r.top - 10, _T("5000"));
 
 	pDC->MoveTo(r.left, r.top + dif_y);
 	pDC->LineTo(r.right, r.top + dif_y);
-	pDC->TextOutW(r.left - 55, r.top + dif_y * 1 - 10, _T("4000"));
+	pDC->TextOutW(r.left - 45, r.top + dif_y * 1 - 10, _T("4000"));
 
 	pDC->MoveTo(r.left, r.top + dif_y * 2);
 	pDC->LineTo(r.right, r.top + dif_y * 2);
-	pDC->TextOutW(r.left - 55, r.top + dif_y * 2 - 10, _T("3000"));
+	pDC->TextOutW(r.left - 45, r.top + dif_y * 2 - 10, _T("3000"));
 
 	pDC->MoveTo(r.left, r.top + dif_y * 3);
 	pDC->LineTo(r.right, r.top + dif_y * 3);
-	pDC->TextOutW(r.left - 55, r.top + dif_y * 3 - 10, _T("2000"));
+	pDC->TextOutW(r.left - 45, r.top + dif_y * 3 - 10, _T("2000"));
 
 	pDC->MoveTo(r.left, r.top + dif_y * 4);
 	pDC->LineTo(r.right, r.top + dif_y * 4);
-	pDC->TextOutW(r.left - 55, r.top + dif_y * 4 - 10, _T("1000"));
+	pDC->TextOutW(r.left - 45, r.top + dif_y * 4 - 10, _T("1000"));
 
-	pDC->TextOutW(r.left - 42, r.bottom - 10, _T("0"));
+	pDC->TextOutW(r.left - 32, r.bottom - 10, _T("0"));
 
 	pDC->MoveTo(r.left + dif_x, r.bottom);
 	pDC->LineTo(r.left + dif_x, r.bottom - 10);
@@ -231,8 +233,11 @@ void CTab2::OnBnClickedButton1()
 	long num[] = { 50000, 100000, 200000, 300000, 500000};
 	long maxnode[] = { 5,10,20,50,100,120,150,200 };
 	int color[5][3] = { {255,0,0},{ 100,200,100 },{ 0,0,255 },{ 255,0,255 },{ 0,0,0 } };
+	CDC MemDC;
+
+	MemDC.CreateCompatibleDC(pDC);
 	InitTable();
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		
 		str.Format(_T("矩形数:%d："), num[i]);

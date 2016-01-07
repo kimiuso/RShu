@@ -6,7 +6,9 @@
 #include "afxcmn.h"
 #include "Tab1.h"
 #include "Tab2.h"
-
+#include "Tab3.h"
+#include "Tab4.h"
+#include "Tab5.h"
 
 // CRShuDlg ¶Ô»°¿ò
 class CRShuDlg : public CDialogEx
@@ -38,4 +40,8 @@ public:
 	CTabCtrl m_tab;
 	CTab1 m_tab1;
 	CTab2 m_tab2;
+	CTab3 m_tab3;
+	CTab4 m_tab4;
+	CTab5 m_tab5;
+	afx_msg void OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult);
 };

@@ -65,6 +65,7 @@ BEGIN_MESSAGE_MAP(CRShuDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB, &CRShuDlg::OnTcnSelchangeTab)
 END_MESSAGE_MAP()
 
 
@@ -106,7 +107,7 @@ BOOL CRShuDlg::OnInitDialog()
 	m_tab.InsertItem(1, _T("实验2"));
 	m_tab.InsertItem(2, _T("实验3"));
 	m_tab.InsertItem(3, _T("实验4"));
-	m_tab.InsertItem(4, _T("小例子"));
+	//m_tab.InsertItem(4, _T("小例子"));
 
 	CRect rs;
 	m_tab.GetClientRect(&rs);
@@ -124,9 +125,20 @@ BOOL CRShuDlg::OnInitDialog()
 	m_tab2.Create(IDD_DIALOG2, GetDlgItem(IDC_TAB));
 	m_tab2.MoveWindow(&rs);
 	m_tab2.ShowWindow(1);
-	//////////////////////          //////////////////////
-	//////////////////////          //////////////////////
-	//////////////////////          //////////////////////
+	//////////////////////     tab3  实验2   //////////////////////
+	m_tab3.Create(IDD_DIALOG3, GetDlgItem(IDC_TAB));
+	m_tab3.MoveWindow(&rs);
+	m_tab3.ShowWindow(0);
+	//////////////////////     tab4  实验3     //////////////////////
+	m_tab4.Create(IDD_DIALOG4, GetDlgItem(IDC_TAB));
+	m_tab4.MoveWindow(&rs);
+	m_tab4.ShowWindow(0);
+
+	//////////////////////     tab5  实验4     //////////////////////
+	m_tab5.Create(IDD_DIALOG5, GetDlgItem(IDC_TAB));
+	m_tab5.MoveWindow(&rs);
+	m_tab5.ShowWindow(0);
+
 	//////////////////////          //////////////////////
 	//////////////////////          //////////////////////
 	//////////////////////          //////////////////////
@@ -186,3 +198,44 @@ HCURSOR CRShuDlg::OnQueryDragIcon()
 }
 
 
+
+
+void CRShuDlg::OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+	int CurSel = m_tab.GetCurSel();
+	switch (CurSel)
+	{
+	case 0:
+		m_tab2.ShowWindow(true);
+		m_tab3.ShowWindow(false);
+		m_tab4.ShowWindow(false);
+		m_tab5.ShowWindow(false);
+		break;
+	case 1:
+		m_tab2.ShowWindow(false);
+		m_tab3.ShowWindow(true);
+		m_tab4.ShowWindow(false);
+		m_tab5.ShowWindow(false);
+		break;
+	case 2:
+		m_tab2.ShowWindow(false);
+		m_tab3.ShowWindow(false);
+		m_tab4.ShowWindow(true);
+		m_tab5.ShowWindow(false);
+		break;
+	case 3:
+		m_tab2.ShowWindow(false);
+		m_tab3.ShowWindow(false);
+		m_tab4.ShowWindow(false);
+		m_tab5.ShowWindow(true);
+		break;
+
+	default:
+		;
+		//*pResult = 0;
+	}
+
+	*pResult = 0;
+}

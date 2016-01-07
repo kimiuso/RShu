@@ -41,4 +41,5 @@ public:
 	afx_msg void OnPaint();
 	int GetRand(int, int);
 	void InitTable();
+	CStatic m_title;
 };

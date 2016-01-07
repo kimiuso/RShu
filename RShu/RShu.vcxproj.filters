@@ -42,6 +42,15 @@
     <ClInclude Include="Tab2.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Tab3.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Tab4.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Tab5.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RShu.cpp">
@@ -60,6 +69,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Tab2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Tab3.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Tab4.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Tab5.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
