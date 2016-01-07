@@ -32,6 +32,7 @@ public:
 	long y_m;
 	long dif_x;
 	long dif_y;
+	bool firstrun = true;
 
 	//RTree m_rtree;
 	afx_msg void OnBnClickedButton1();
@@ -39,4 +40,5 @@ public:
 	long Test(int, int);
 	afx_msg void OnPaint();
 	int GetRand(int, int);
+	void InitTable();
 };

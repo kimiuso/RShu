@@ -93,16 +93,30 @@ void CTab2::OnPaint()
 
 	pPic = (CStatic*)GetDlgItem(IDC_STATIC);//获取控件
 	pDC = pPic->GetWindowDC();//获取设备环境
-	//CRect r;
+	//pPic->GetClientRect(r);
+	if(firstrun)
+	{
+		InitTable();
+		firstrun = false;
+	}
+					   // 不为绘图消息调用 CDialogEx::OnPaint()
+}
+
+int CTab2::GetRand(int MIN, int MAX)
+{
+	int max;
+
+	max = RAND_MAX;//rand()函数随机数的最大值
+
+	return (int)(rand()*(MAX - MIN) / max + MIN);
+}
+
+void CTab2::InitTable()
+{
 	pPic->GetClientRect(r);
-	x_m = r.right - r.left;
-	y_m = r.bottom - r.top;
-	//pDC->MoveTo(30, y_m - 30);
-	//pDC->LineTo(x_m - 30, y_m - 30);
-	
 	pDC->Rectangle(r);
-	r.top += 130;
-	r.bottom -= 60;
+	r.top += 100;
+	r.bottom -= 90;
 	r.left += 100;
 	r.right -= 60;
 	pDC->Rectangle(r);
@@ -110,6 +124,47 @@ void CTab2::OnPaint()
 	dif_x = (r.right - r.left) / 9;
 	dif_y = (r.bottom - r.top) / 5;
 
+	//int color[5][3] = { { 255,0,0 },{ 150,150,255 },{ 100,255,100 },{ 255,0,255 },{ 0,0,0 } };
+	//long num[] = { 50000, 100000, 200000, 300000, 500000 };
+	long x = 60;
+	CPen pen(PS_SOLID, 1, RGB(255, 0, 0));
+	CPen *pOldPen = pDC->SelectObject(&pen);
+	pDC->MoveTo(r.left + x, r.top - 60);
+	pDC->LineTo(r.left + x + 40, r.top - 60);
+	pDC->TextOutW(r.left + x + 46, r.top - 67, _T("50000"));
+	x += 110;
+
+	pen.CreatePen(PS_SOLID, 1, RGB(100, 200, 100));
+	pDC->SelectObject(&pen);
+	pDC->MoveTo(r.left + x, r.top - 60);
+	pDC->LineTo(r.left + x + 40, r.top - 60);
+	pDC->TextOutW(r.left + x + 46, r.top - 67, _T("100000"));
+	x += 120;
+
+	pen.CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
+	pDC->SelectObject(&pen);
+	pDC->MoveTo(r.left + x, r.top - 60);
+	pDC->LineTo(r.left + x + 40, r.top - 60);
+	pDC->TextOutW(r.left + x + 46, r.top - 67, _T("200000"));
+	x += 120;
+
+	pen.CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
+	pDC->SelectObject(&pen);
+	pDC->MoveTo(r.left + x, r.top - 60);
+	pDC->LineTo(r.left + x + 40, r.top - 60);
+	pDC->TextOutW(r.left + x + 46, r.top - 67, _T("300000"));
+	x += 120;
+	pen.CreatePen(PS_SOLID, 1, RGB(0, 0, 0));
+	pDC->SelectObject(&pen);
+	pDC->MoveTo(r.left + x, r.top - 60);
+	pDC->LineTo(r.left + x + 40, r.top - 60);
+	pDC->TextOutW(r.left + x + 46, r.top - 67, _T("500000"));
+	
+
+
+	pDC->SelectObject(pOldPen);
+
+	pDC->TextOutW(r.left - 55, r.top - 50, _T("耗时/ms"));
 
 	pDC->TextOutW(r.left - 55, r.top - 10, _T("5000"));
 
@@ -117,8 +172,8 @@ void CTab2::OnPaint()
 	pDC->LineTo(r.right, r.top + dif_y);
 	pDC->TextOutW(r.left - 55, r.top + dif_y * 1 - 10, _T("4000"));
 
-	pDC->MoveTo(r.left, r.top + dif_y*2);
-	pDC->LineTo(r.right, r.top + dif_y*2);
+	pDC->MoveTo(r.left, r.top + dif_y * 2);
+	pDC->LineTo(r.right, r.top + dif_y * 2);
 	pDC->TextOutW(r.left - 55, r.top + dif_y * 2 - 10, _T("3000"));
 
 	pDC->MoveTo(r.left, r.top + dif_y * 3);
@@ -162,76 +217,44 @@ void CTab2::OnPaint()
 	pDC->MoveTo(r.left + dif_x * 8, r.bottom);
 	pDC->LineTo(r.left + dif_x * 8, r.bottom - 10);
 	pDC->TextOutW(r.left + dif_x * 8 - 11, r.bottom, _T("200"));
-					   // 不为绘图消息调用 CDialogEx::OnPaint()
-}
 
-int CTab2::GetRand(int MIN, int MAX)
-{
-	int max;
-
-	max = RAND_MAX;//rand()函数随机数的最大值
-
-	return (int)(rand()*(MAX - MIN) / max + MIN);
+	pDC->TextOutW(r.left + dif_x * 9 , r.bottom, _T("M值"));
 }
 
 
 void CTab2::OnBnClickedButton1()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	//int maxNode = 200;
-	//RTree rtree(maxNode);
-	//long t1 = GetTickCount();//
-	//long t2=0;
-	//Rect r;
-	//for (int i = 0; i < 50000; i++)
-	//{
-	//	r = { i,i,i+1,i+1 };
-	//	t1 = GetTickCount();
-	//	rtree.Insert(r);
-	//	t2 += GetTickCount() - t1;
-	//}
-	//CString str;
-	//str.Format(_T("time:%dms"), t2);//
-	//ShowText(str);
-
 	//1000000, 500000, 300000, 200000, 100000
 	m_text = "";
 	CString str;
-	long num[] = { 100000, 200000, 300000, 500000, 1000000 };
+	long num[] = { 50000, 100000, 200000, 300000, 500000};
 	long maxnode[] = { 5,10,20,50,100,120,150,200 };
+	int color[5][3] = { {255,0,0},{ 100,200,100 },{ 0,0,255 },{ 255,0,255 },{ 0,0,0 } };
+	InitTable();
 	for (int i = 0; i < 5; i++)
 	{
 		
 		str.Format(_T("矩形数:%d："), num[i]);
 		ShowText(str);
+		CPen pen(PS_SOLID, 1, RGB(color[i][0], color[i][1], color[i][2]));
+		CPen *pOldPen = pDC->SelectObject(&pen);
 		//pDC->MoveTo(r.left + dif_x * i, i);
 		for (int j = 0; j < 8; j++)
 		{
 			long t=Test(maxnode[j], num[i]);
-			str.Format(_T("内部节点最大条目数:%d：\r\n耗时:%d\r\n"), maxnode[j],t);
+			str.Format(_T("  内部节点最大条目数:%d：\r\n  耗时:%dms\r\n"), maxnode[j],t);
 			ShowText(str);	
+			long y = (long)((5000.0 - t) * dif_y / 1000+ r.top);
 			if (j == 0)
 			{
-				pDC->MoveTo(r.left + dif_x * (j + 1), (5000 - t) * dif_y / 1000 + r.top);
+				pDC->MoveTo(r.left + dif_x * (j + 1), y);
 			}
-			pDC->LineTo(r.left + dif_x * (j + 1), (5000 - t) * dif_y / 1000  + r.top);
+			pDC->LineTo(r.left + dif_x * (j + 1), y );
 			
 		}
+		pDC->SelectObject(pOldPen);
 	}
-	
-	/*Test(5, 500000);
-	Test(10, 500000);
-	Test(20, 500000);
-	Test(50, 500000);
-	Test(100, 500000);
-	Test(120, 500000);
-	Test(150, 500000);
-	Test(200, 1000000);*/
-	
-	
-	
-
-	
 
 
 
