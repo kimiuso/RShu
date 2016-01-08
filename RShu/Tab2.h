@@ -33,11 +33,13 @@ public:
 	long dif_x;
 	long dif_y;
 	bool firstrun = true;
+	CDC MemDC;
+	CBitmap bm;
 
 	//RTree m_rtree;
 	afx_msg void OnBnClickedButton1();
 	void ShowText(CString);
-	long Test(int, int);
+	long Test(int, long);
 	afx_msg void OnPaint();
 	int GetRand(int, int);
 	void InitTable();

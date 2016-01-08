@@ -54,7 +54,7 @@ void CTab2::ShowText(CString str)
 	///////////////////////////////
 }
 
-long CTab2::Test(int max, int n)
+long CTab2::Test(int max, long n)
 {
 	int maxNode = max;
 	RTree rtree(maxNode);
@@ -64,7 +64,7 @@ long CTab2::Test(int max, int n)
 	/*CString str;
 	str.Format(_T("内部节点最大条目数:%d,\r\n矩形数:%d："), max, n);
 	ShowText(str);*/
-	for (int i = 0; i < n; i++)
+	for (long i = 0; i < n; i++)
 	{
 		int x0 = GetRand(0, 10000);
 		int y0 = GetRand(0, 10000);
@@ -95,12 +95,19 @@ void CTab2::OnPaint()
 
 	pPic = (CStatic*)GetDlgItem(IDC_STATIC);//获取控件
 	pDC = pPic->GetWindowDC();//获取设备环境
-	//pPic->GetClientRect(r);
+	
 	if(firstrun)
 	{
+		pPic->GetClientRect(r);
+		x_m = r.Width();
+		y_m = r.Height();
+		MemDC.CreateCompatibleDC(pDC);
+		bm.CreateCompatibleBitmap(pDC, x_m, y_m);
+		MemDC.SelectObject(&bm);
 		InitTable();
 		firstrun = false;
 	}
+	pDC->BitBlt(0, 0, x_m, y_m, &MemDC, 0, 0, SRCAND);
 					   // 不为绘图消息调用 CDialogEx::OnPaint()
 }
 
@@ -116,111 +123,112 @@ int CTab2::GetRand(int MIN, int MAX)
 void CTab2::InitTable()
 {
 	pPic->GetClientRect(r);
-	pDC->Rectangle(r);
-	r.top += 100;
-	r.bottom -= 90;
+	MemDC.Rectangle(r);
+	r.top += 130;
+	r.bottom -= 40;
 	r.left += 100;
 	r.right -= 60;
-	pDC->Rectangle(r);
+	MemDC.Rectangle(r);
 
 	dif_x = (r.right - r.left) / 9;
 	dif_y = (r.bottom - r.top) / 5;
 
 	//int color[5][3] = { { 255,0,0 },{ 150,150,255 },{ 100,255,100 },{ 255,0,255 },{ 0,0,0 } };
 	//long num[] = { 50000, 100000, 200000, 300000, 500000 };
-	long x = 60;
+	long x = -80;
 	CPen pen(PS_SOLID, 1, RGB(255, 0, 0));
-	CPen *pOldPen = pDC->SelectObject(&pen);
-	pDC->MoveTo(r.left + x, r.top - 60);
-	pDC->LineTo(r.left + x + 40, r.top - 60);
-	pDC->TextOutW(r.left + x + 46, r.top - 67, _T("50000"));
-	x += 110;
+	CPen *pOldPen = MemDC.SelectObject(&pen);
+	MemDC.MoveTo(r.left + x, r.top - 90);
+	MemDC.LineTo(r.left + x + 35, r.top - 90);
+	MemDC.TextOutW(r.left + x + 41, r.top - 97, _T("50000"));
+	x += 100;
 
 	pen.CreatePen(PS_SOLID, 1, RGB(100, 200, 100));
-	pDC->SelectObject(&pen);
-	pDC->MoveTo(r.left + x, r.top - 60);
-	pDC->LineTo(r.left + x + 40, r.top - 60);
-	pDC->TextOutW(r.left + x + 46, r.top - 67, _T("100000"));
-	x += 120;
+	MemDC.SelectObject(&pen);
+	MemDC.MoveTo(r.left + x, r.top - 90);
+	MemDC.LineTo(r.left + x + 35, r.top - 90);
+	MemDC.TextOutW(r.left + x + 41, r.top - 97, _T("100000"));
+	x += 110;
 
 	pen.CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
-	pDC->SelectObject(&pen);
-	pDC->MoveTo(r.left + x, r.top - 60);
-	pDC->LineTo(r.left + x + 40, r.top - 60);
-	pDC->TextOutW(r.left + x + 46, r.top - 67, _T("200000"));
-	x += 120;
+	MemDC.SelectObject(&pen);
+	MemDC.MoveTo(r.left + x, r.top - 90);
+	MemDC.LineTo(r.left + x + 35, r.top - 90);
+	MemDC.TextOutW(r.left + x + 41, r.top - 97, _T("200000"));
+	x += 110;
 
 	pen.CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
-	pDC->SelectObject(&pen);
-	pDC->MoveTo(r.left + x, r.top - 60);
-	pDC->LineTo(r.left + x + 40, r.top - 60);
-	pDC->TextOutW(r.left + x + 46, r.top - 67, _T("300000"));
-	x += 120;
+	MemDC.SelectObject(&pen);
+	MemDC.MoveTo(r.left + x, r.top - 90);
+	MemDC.LineTo(r.left + x + 35, r.top - 90);
+	MemDC.TextOutW(r.left + x + 41, r.top - 97, _T("300000"));
+	x += 110;
+
 	pen.CreatePen(PS_SOLID, 1, RGB(0, 0, 0));
-	pDC->SelectObject(&pen);
-	pDC->MoveTo(r.left + x, r.top - 60);
-	pDC->LineTo(r.left + x + 40, r.top - 60);
-	pDC->TextOutW(r.left + x + 46, r.top - 67, _T("500000"));
+	MemDC.SelectObject(&pen);
+	MemDC.MoveTo(r.left + x, r.top - 90);
+	MemDC.LineTo(r.left + x + 35, r.top - 90);
+	MemDC.TextOutW(r.left + x + 41, r.top - 97, _T("500000"));
 	
 
 
-	pDC->SelectObject(pOldPen);
+	MemDC.SelectObject(pOldPen);
 
-	pDC->TextOutW(r.left - 55, r.top - 50, _T("耗时/ms"));
+	MemDC.TextOutW(r.left - 55, r.top - 50, _T("耗时/ms"));
 
-	pDC->TextOutW(r.left - 45, r.top - 10, _T("5000"));
+	MemDC.TextOutW(r.left - 45, r.top - 10, _T("5000"));
 
-	pDC->MoveTo(r.left, r.top + dif_y);
-	pDC->LineTo(r.right, r.top + dif_y);
-	pDC->TextOutW(r.left - 45, r.top + dif_y * 1 - 10, _T("4000"));
+	MemDC.MoveTo(r.left, r.top + dif_y);
+	MemDC.LineTo(r.right, r.top + dif_y);
+	MemDC.TextOutW(r.left - 45, r.top + dif_y * 1 - 10, _T("4000"));
 
-	pDC->MoveTo(r.left, r.top + dif_y * 2);
-	pDC->LineTo(r.right, r.top + dif_y * 2);
-	pDC->TextOutW(r.left - 45, r.top + dif_y * 2 - 10, _T("3000"));
+	MemDC.MoveTo(r.left, r.top + dif_y * 2);
+	MemDC.LineTo(r.right, r.top + dif_y * 2);
+	MemDC.TextOutW(r.left - 45, r.top + dif_y * 2 - 10, _T("3000"));
 
-	pDC->MoveTo(r.left, r.top + dif_y * 3);
-	pDC->LineTo(r.right, r.top + dif_y * 3);
-	pDC->TextOutW(r.left - 45, r.top + dif_y * 3 - 10, _T("2000"));
+	MemDC.MoveTo(r.left, r.top + dif_y * 3);
+	MemDC.LineTo(r.right, r.top + dif_y * 3);
+	MemDC.TextOutW(r.left - 45, r.top + dif_y * 3 - 10, _T("2000"));
 
-	pDC->MoveTo(r.left, r.top + dif_y * 4);
-	pDC->LineTo(r.right, r.top + dif_y * 4);
-	pDC->TextOutW(r.left - 45, r.top + dif_y * 4 - 10, _T("1000"));
+	MemDC.MoveTo(r.left, r.top + dif_y * 4);
+	MemDC.LineTo(r.right, r.top + dif_y * 4);
+	MemDC.TextOutW(r.left - 45, r.top + dif_y * 4 - 10, _T("1000"));
 
-	pDC->TextOutW(r.left - 32, r.bottom - 10, _T("0"));
+	MemDC.TextOutW(r.left - 32, r.bottom - 10, _T("0"));
 
-	pDC->MoveTo(r.left + dif_x, r.bottom);
-	pDC->LineTo(r.left + dif_x, r.bottom - 10);
-	pDC->TextOutW(r.left + dif_x - 3, r.bottom, _T("5"));
+	MemDC.MoveTo(r.left + dif_x, r.bottom);
+	MemDC.LineTo(r.left + dif_x, r.bottom - 10);
+	MemDC.TextOutW(r.left + dif_x - 3, r.bottom, _T("5"));
 
-	pDC->MoveTo(r.left + dif_x * 2, r.bottom);
-	pDC->LineTo(r.left + dif_x * 2, r.bottom - 10);
-	pDC->TextOutW(r.left + dif_x * 2 - 7, r.bottom, _T("10"));
+	MemDC.MoveTo(r.left + dif_x * 2, r.bottom);
+	MemDC.LineTo(r.left + dif_x * 2, r.bottom - 10);
+	MemDC.TextOutW(r.left + dif_x * 2 - 7, r.bottom, _T("10"));
 
-	pDC->MoveTo(r.left + dif_x * 3, r.bottom);
-	pDC->LineTo(r.left + dif_x * 3, r.bottom - 10);
-	pDC->TextOutW(r.left + dif_x * 3 - 7, r.bottom, _T("20"));
+	MemDC.MoveTo(r.left + dif_x * 3, r.bottom);
+	MemDC.LineTo(r.left + dif_x * 3, r.bottom - 10);
+	MemDC.TextOutW(r.left + dif_x * 3 - 7, r.bottom, _T("20"));
 
-	pDC->MoveTo(r.left + dif_x * 4, r.bottom);
-	pDC->LineTo(r.left + dif_x * 4, r.bottom - 10);
-	pDC->TextOutW(r.left + dif_x * 4 - 7, r.bottom, _T("50"));
+	MemDC.MoveTo(r.left + dif_x * 4, r.bottom);
+	MemDC.LineTo(r.left + dif_x * 4, r.bottom - 10);
+	MemDC.TextOutW(r.left + dif_x * 4 - 7, r.bottom, _T("50"));
 
-	pDC->MoveTo(r.left + dif_x * 5, r.bottom);
-	pDC->LineTo(r.left + dif_x * 5, r.bottom - 10);
-	pDC->TextOutW(r.left + dif_x * 5 - 11, r.bottom, _T("100"));
+	MemDC.MoveTo(r.left + dif_x * 5, r.bottom);
+	MemDC.LineTo(r.left + dif_x * 5, r.bottom - 10);
+	MemDC.TextOutW(r.left + dif_x * 5 - 11, r.bottom, _T("100"));
 
-	pDC->MoveTo(r.left + dif_x * 6, r.bottom);
-	pDC->LineTo(r.left + dif_x * 6, r.bottom - 10);
-	pDC->TextOutW(r.left + dif_x * 6 - 11, r.bottom, _T("120"));
+	MemDC.MoveTo(r.left + dif_x * 6, r.bottom);
+	MemDC.LineTo(r.left + dif_x * 6, r.bottom - 10);
+	MemDC.TextOutW(r.left + dif_x * 6 - 11, r.bottom, _T("120"));
 
-	pDC->MoveTo(r.left + dif_x * 7, r.bottom);
-	pDC->LineTo(r.left + dif_x * 7, r.bottom - 10);
-	pDC->TextOutW(r.left + dif_x * 7 - 11, r.bottom, _T("150"));
+	MemDC.MoveTo(r.left + dif_x * 7, r.bottom);
+	MemDC.LineTo(r.left + dif_x * 7, r.bottom - 10);
+	MemDC.TextOutW(r.left + dif_x * 7 - 11, r.bottom, _T("150"));
 
-	pDC->MoveTo(r.left + dif_x * 8, r.bottom);
-	pDC->LineTo(r.left + dif_x * 8, r.bottom - 10);
-	pDC->TextOutW(r.left + dif_x * 8 - 11, r.bottom, _T("200"));
+	MemDC.MoveTo(r.left + dif_x * 8, r.bottom);
+	MemDC.LineTo(r.left + dif_x * 8, r.bottom - 10);
+	MemDC.TextOutW(r.left + dif_x * 8 - 11, r.bottom, _T("200"));
 
-	pDC->TextOutW(r.left + dif_x * 9 , r.bottom, _T("M值"));
+	MemDC.TextOutW(r.left + dif_x * 9 , r.bottom, _T("M值"));
 }
 
 
@@ -228,23 +236,23 @@ void CTab2::OnBnClickedButton1()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	//1000000, 500000, 300000, 200000, 100000
+	GetDlgItem(IDC_BUTTON1)->EnableWindow(FALSE);
 	m_text = "";
 	CString str;
 	long num[] = { 50000, 100000, 200000, 300000, 500000};
 	long maxnode[] = { 5,10,20,50,100,120,150,200 };
 	int color[5][3] = { {255,0,0},{ 100,200,100 },{ 0,0,255 },{ 255,0,255 },{ 0,0,0 } };
-	CDC MemDC;
 
-	MemDC.CreateCompatibleDC(pDC);
-	InitTable();
-	for (int i = 0; i < 1; i++)
+	//MemDC.CreateCompatibleDC(pDC);
+	for (int i = 0; i < 5; i++)
 	{
 		
 		str.Format(_T("矩形数:%d："), num[i]);
 		ShowText(str);
 		CPen pen(PS_SOLID, 1, RGB(color[i][0], color[i][1], color[i][2]));
-		CPen *pOldPen = pDC->SelectObject(&pen);
+		CPen *pOldPen = MemDC.SelectObject(&pen);
 		//pDC->MoveTo(r.left + dif_x * i, i);
+
 		for (int j = 0; j < 8; j++)
 		{
 			long t=Test(maxnode[j], num[i]);
@@ -253,14 +261,15 @@ void CTab2::OnBnClickedButton1()
 			long y = (long)((5000.0 - t) * dif_y / 1000+ r.top);
 			if (j == 0)
 			{
-				pDC->MoveTo(r.left + dif_x * (j + 1), y);
+				MemDC.MoveTo(r.left + dif_x * (j + 1), y);
 			}
-			pDC->LineTo(r.left + dif_x * (j + 1), y );
+			MemDC.LineTo(r.left + dif_x * (j + 1), y );
+			pDC->BitBlt(0, 0, x_m, y_m, &MemDC, 0, 0, SRCAND);
 			
 		}
-		pDC->SelectObject(pOldPen);
+		MemDC.SelectObject(pOldPen);
 	}
-
+	GetDlgItem(IDC_BUTTON1)->EnableWindow(TRUE);
 
 
 }

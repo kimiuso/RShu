@@ -1,5 +1,6 @@
 #pragma once
 #include "afxwin.h"
+#include "RTree.h"
 
 
 // CTab3 ¶Ô»°¿ò
@@ -31,6 +32,8 @@ public:
 	CRect r;
 	long dif_x;
 	long dif_y;
+	long x_m;
+	long y_m;
 	bool firstrun = true;
 	CStatic m_title;
 	CDC MemDC;
@@ -39,7 +42,7 @@ public:
 	void InitTable();
 	afx_msg void OnPaint();
 	void ShowText(CString);
-	//CEdit m_edit;
-	//CStatic m_title;
 	afx_msg void OnBnClickedButton1();
+	int GetRand(int, int);
+	long Test(int, int, long);
 };

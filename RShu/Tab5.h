@@ -1,6 +1,6 @@
 #pragma once
 #include "afxwin.h"
-
+#include "RTree.h"
 // CTab5 ¶Ô»°¿ò
 
 class CTab5 : public CDialogEx
@@ -29,11 +29,17 @@ public:
 	CRect r;
 	long dif_x;
 	long dif_y;
+	long x_m;
+	long y_m;
 	bool firstrun = true;
 	CStatic m_title;
+	CDC MemDC;
+	CBitmap bm;
 
 	void InitTable();
 	void ShowText(CString);
 	afx_msg void OnPaint();
 	afx_msg void OnBnClickedButton1();
+	int GetRand(int, int);
+	long Test(int, int, long);
 };
