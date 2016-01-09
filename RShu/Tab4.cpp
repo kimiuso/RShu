@@ -78,7 +78,7 @@ void CTab4::InitTable()
 
 	MemDC.SelectObject(pOldPen);
 
-	MemDC.TextOutW(r.left - 55, r.top - 50, _T("搜索700个矩形耗时/ms"));
+	MemDC.TextOutW(r.left - 55, r.top - 50, _T("搜索600个矩形耗时/ms"));
 
 	MemDC.TextOutW(r.left - 45, r.top - 10, _T("1000"));
 
@@ -191,19 +191,19 @@ long CTab4::Test(int max, long n)
 	{
 		int x0 = GetRand(0, 10000);
 		int y0 = GetRand(0, 10000);
-		int x1 = x0 + GetRand(0, 100 * 5);
-		int y1 = y0 + GetRand(0, 100 * 5);
+		int x1 = x0 + GetRand(100, 100 * 5);
+		int y1 = y0 + GetRand(100, 100 * 5);
 		r = { x0,y0,x1,y1 };
 		//t1 = GetTickCount();
 		rtree.Insert(r);
 		//t2 += GetTickCount() - t1;
 	}
-	for (int i = 0; i < 700; i++)
+	for (int i = 0; i < 600; i++)
 	{
 		int x0 = GetRand(0, 10000);
 		int y0 = GetRand(0, 10000);
-		int x1 = x0 + GetRand(0, 100 * 5);
-		int y1 = y0 + GetRand(0, 100 * 5);
+		int x1 = x0 + GetRand(100, 100 * 5);
+		int y1 = y0 + GetRand(100, 100 * 5);
 		r = { x0,y0,x1,y1 };
 		t1 = GetTickCount();
 		rtree.Search(r);

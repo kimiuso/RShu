@@ -68,8 +68,8 @@ long CTab2::Test(int max, long n)
 	{
 		int x0 = GetRand(0, 10000);
 		int y0 = GetRand(0, 10000);
-		int x1 = x0 + GetRand(0, 10);
-		int y1 = y0 + GetRand(0, 10);
+		int x1 = x0 + GetRand(100, 500);
+		int y1 = y0 + GetRand(100, 500);
 		r = { x0,y0,x1,y1 };
 		t1 = GetTickCount();
 		rtree.Insert(r);
